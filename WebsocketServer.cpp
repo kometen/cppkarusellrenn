@@ -21,6 +21,30 @@ void WebsocketServer::on_close(connection_hdl hdl) {
 
 void WebsocketServer::on_message(connection_hdl hdl, server::message_ptr msg) {
     connection_ptr con = m_server.get_con_from_hdl(hdl);
+
+    payload = msg->get_payload ();
+    try {
+        jdata.clear ();
+        jdata = nlohmann::json::parse(payload);
+
+        if (jdata["type"] == "validate") {
+            message.clear();
+            message["type"] = "status";
+            message["status"] = "OK";
+            msg->set_payload(message.dump());
+            m_server.send(hdl, msg);
+            std::cout << "Connected." << std::endl;
+        }
+
+    } catch (const std::exception& e) {
+        std::string what_e;
+        what_e = e.what();
+        jerror["type"] = "error";
+        jerror["error_type"] = "Unable to parse json: " + what_e;
+        msg->set_payload(jerror.dump());
+        m_server.send(hdl, msg);
+    }
+
 }
 
 void WebsocketServer::run(uint16_t port) {

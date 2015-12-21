@@ -4,6 +4,7 @@
 //
 
 #include <bandit/bandit.h>
+#include "WebsocketServer.h"
 
 using namespace bandit;
 

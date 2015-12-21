@@ -55,6 +55,11 @@ private:
     typedef std::set<connection_hdl, std::owner_less<connection_hdl>> con_list;
     con_list m_connections;
 
+    std::string payload;
+    nlohmann::json jdata;
+    nlohmann::json message;
+    nlohmann::json jerror;
+
 public:
     WebsocketServer() : m_next_session_id(1) {
         m_server.init_asio();
