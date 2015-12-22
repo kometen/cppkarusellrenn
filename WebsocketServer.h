@@ -12,6 +12,8 @@
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
 
+#include "Database.h"
+
 struct connection_data {
     unsigned int session_id;
     std::string name;

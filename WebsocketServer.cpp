@@ -20,6 +20,7 @@ void WebsocketServer::on_close(connection_hdl hdl) {
 }
 
 void WebsocketServer::on_message(connection_hdl hdl, server::message_ptr msg) {
+    Database database {};
     connection_ptr con = m_server.get_con_from_hdl(hdl);
 
     payload = msg->get_payload ();
@@ -34,6 +35,13 @@ void WebsocketServer::on_message(connection_hdl hdl, server::message_ptr msg) {
             msg->set_payload(message.dump());
             m_server.send(hdl, msg);
             std::cout << "Connected." << std::endl;
+        }
+
+        if (jdata["type"] == "get races") {
+            message.clear();
+            message = database.get_races();
+            msg->set_payload(message.dump());
+            m_server.send(hdl, msg);
         }
 
     } catch (const std::exception& e) {
