@@ -15,6 +15,7 @@ private:
 public:
     Database();
     nlohmann::json get_races();
+    int add_race(nlohmann::json);
 };
 
 

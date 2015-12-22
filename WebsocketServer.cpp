@@ -44,6 +44,14 @@ void WebsocketServer::on_message(connection_hdl hdl, server::message_ptr msg) {
             m_server.send(hdl, msg);
         }
 
+        if (jdata["type"] == "add race") {
+            int status = database.add_race(jdata);
+            message.clear();
+            message = database.get_races();
+            msg->set_payload(message.dump());
+            m_server.send(hdl, msg);
+        }
+
     } catch (const std::exception& e) {
         std::string what_e;
         what_e = e.what();
