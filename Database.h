@@ -11,11 +11,14 @@
 class Database {
 private:
     nlohmann::json races;
+    nlohmann::json participants;
 
 public:
     Database();
     nlohmann::json get_races();
     int add_race(nlohmann::json);
+    nlohmann::json get_participants(nlohmann::json);
+    int add_participant(nlohmann::json);
 };
 
 
