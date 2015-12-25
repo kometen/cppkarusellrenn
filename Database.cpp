@@ -4,6 +4,15 @@
 
 #include "Database.h"
 
+// pqxx::result::field
+std::string column_content(pqxx::result::field a) {
+    if (static_cast<bool>(a.size())) {
+        return a.as<std::string>();
+    } else {
+        return "";
+    }
+}
+
 Database::Database() { }
 
 nlohmann::json Database::get_races() {
@@ -20,11 +29,11 @@ nlohmann::json Database::get_races() {
 
             for (pqxx::result::const_iterator c = R.begin(); c != R.end(); ++c) {
                 races["races"] += { \
-                    {"id", c[0].as<std::string>()},
-                    {"location", c[1].as<std::string>()},
-                    {"racename", c[2].as<std::string>()},
-                    {"racestart_at", c[3].as<std::string>()},
-                    {"interval", c[4].as<std::string>()}
+                    {"id", column_content(c[0]) },
+                    {"location", column_content(c[1]) },
+                    {"racename", column_content(c[2]) },
+                    {"racestart_at", column_content(c[3]) },
+                    {"interval", column_content(c[4]) }
                 };
             }
         }
@@ -87,17 +96,17 @@ nlohmann::json Database::get_participants(nlohmann::json json) {
 
             for (pqxx::result::const_iterator c = R.begin(); c != R.end(); ++c) {
                 participants["participants"] += { \
-                    {"id", c[0].as<std::string>()},
-                    {"location", c[1].as<std::string>()},
-                    {"racename", c[2].as<std::string>()},
-                    {"racestart_at", c[3].as<std::string>()},
-                    {"name", c[4].as<std::string>()},
-                    {"gender", c[5].as<std::string>()},
-                    {"born", c[6].as<std::string>()},
-                    {"club", c[7].as<std::string>()},
-                    {"start_at", static_cast<bool>(c[8].size()) ? c[8].as<std::string>() : ""},
-                    {"ended_at", static_cast<bool>(c[9].size()) ? c[9].as<std::string>() : ""},
-                    {"racetime", static_cast<bool>(c[10].size()) ? c[10].as<std::string>() : ""}
+                    {"id", column_content(c[0]) },
+                    {"location", column_content(c[1]) },
+                    {"racename", column_content(c[2]) },
+                    {"racestart_at", column_content(c[3]) },
+                    {"name", column_content(c[4]) },
+                    {"gender", column_content(c[5]) },
+                    {"born", column_content(c[6]) },
+                    {"club", column_content(c[7]) },
+                    {"start_at", column_content(c[8]) },
+                    {"ended_at", column_content(c[9]) },
+                    {"racetime", column_content(c[10]) }
                 };
             }
             status = EXIT_SUCCESS;
