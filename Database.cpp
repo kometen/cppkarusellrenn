@@ -106,7 +106,8 @@ nlohmann::json Database::get_participants(nlohmann::json json) {
                     {"club", column_content(c[7]) },
                     {"start_at", column_content(c[8]) },
                     {"ended_at", column_content(c[9]) },
-                    {"racetime", column_content(c[10]) }
+                    {"racetime", column_content(c[10]) },
+                    {"raceid", column_content(c[11]) }
                 };
             }
             status = EXIT_SUCCESS;
