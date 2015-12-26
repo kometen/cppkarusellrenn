@@ -89,7 +89,7 @@ nlohmann::json Database::get_participants(nlohmann::json json) {
             query += " where location = '" + location + "'";
             query += " and racename = '" + racename + "'";
             query += " and racestart_at = '" + racestart_at + "'";
-            query += " order by racestart_at desc";
+            query += " order by born, gender";
 
             pqxx::nontransaction N(C);
             pqxx::result R(N.exec(query));
@@ -140,6 +140,39 @@ int Database::add_participant(nlohmann::json json) {
             std::string query = "insert into participants (location, racename, racestart_at, name, gender, born, club) values ";
             query += "('" + location + "', '" + racename + "', '" + racestart_at + "', '";
             query += name + "', '" + gender + "', '" + born + "', '" + club + "')";
+
+            W.exec(query);
+            W.commit();
+            C.disconnect();
+            status = EXIT_SUCCESS;
+        }
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
+
+    return status;
+}
+
+int Database::delete_participant(nlohmann::json json) {
+    int status = EXIT_FAILURE;
+    std::string location = json["location"];
+    std::string racename = json["racename"];
+    std::string racestart_at = json["racestart_at"];
+    std::string name = json["name"];
+    std::string gender = json["gender"];
+    std::string born = json["born"];
+    std::string club = json["club"];
+
+    try {
+        pqxx::connection C("dbname=races user=claus hostaddr=127.0.0.1 port=5432");
+        if (!C.is_open()) {
+            std::cout << "Unable to connect to database" << std::endl;
+        } else {
+            pqxx::work W(C);
+
+            std::string query = "delete from participants where ";
+            query += "location = '" + location + "' and racename = '" + racename + "' and racestart_at =  '" + racestart_at + "'";
+            query += "and name = '" + name + "' and gender = '" + gender + "' and born = '" + born + "' and club = '" + club + "'";
 
             W.exec(query);
             W.commit();
