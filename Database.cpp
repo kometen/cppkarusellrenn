@@ -153,6 +153,37 @@ int Database::add_participant(nlohmann::json json) {
     return status;
 }
 
+int Database::update_participant(nlohmann::json json) {
+    int status = EXIT_FAILURE;
+    std::string id = json["id"];
+    std::string name = json["name"];
+    std::string gender = json["gender"];
+    std::string born = json["born"];
+    std::string club = json["club"];
+
+    try {
+        pqxx::connection C("dbname=races user=claus hostaddr=127.0.0.1 port=5432");
+        if (!C.is_open()) {
+            std::cout << "Unable to connect to database" << std::endl;
+        } else {
+            pqxx::work W(C);
+
+            std::string query = "update participants set ";
+            query += "name = '" + name + "', gender = '" + gender + "', born = '" + born + "', club = '" + club + "'";
+            query += " where id = " + id;
+
+            W.exec(query);
+            W.commit();
+            C.disconnect();
+            status = EXIT_SUCCESS;
+        }
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
+
+    return status;
+}
+
 int Database::delete_participant(nlohmann::json json) {
     int status = EXIT_FAILURE;
     std::string location = json["location"];

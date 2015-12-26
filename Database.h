@@ -19,6 +19,7 @@ public:
     int add_race(nlohmann::json);
     nlohmann::json get_participants(nlohmann::json);
     int add_participant(nlohmann::json);
+    int update_participant(nlohmann::json);
     int delete_participant(nlohmann::json);
 };
 
