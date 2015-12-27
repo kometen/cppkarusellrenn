@@ -19,7 +19,7 @@ nlohmann::json Database::get_races() {
     races.clear();
     races["type"] = "races";
     try {
-        pqxx::connection C("dbname=races user=claus hostaddr=127.0.0.1 port=5432");
+        pqxx::connection C(connectionString);
         if (!C.is_open()) {
             std::cout << "Unable to connect to database" << std::endl;
         } else {
@@ -51,7 +51,7 @@ int Database::add_race(nlohmann::json json) {
     std::string racestart_at = json["racestart_at"];
     std::string interval = json["interval"];
     try {
-        pqxx::connection C("dbname=races user=claus hostaddr=127.0.0.1 port=5432");
+        pqxx::connection C(connectionString);
         if (!C.is_open()) {
             std::cout << "Unable to connect to database" << std::endl;
         } else {
@@ -81,7 +81,7 @@ nlohmann::json Database::get_participants(nlohmann::json json) {
     std::string racestart_at = json["racestart_at"];
 
     try {
-        pqxx::connection C("dbname=races user=claus hostaddr=127.0.0.1 port=5432");
+        pqxx::connection C(connectionString);
         if (!C.is_open()) {
             std::cout << "Unable to connect to database" << std::endl;
         } else {
@@ -131,7 +131,7 @@ int Database::add_participant(nlohmann::json json) {
     std::string club = json["club"];
 
     try {
-        pqxx::connection C("dbname=races user=claus hostaddr=127.0.0.1 port=5432");
+        pqxx::connection C(connectionString);
         if (!C.is_open()) {
             std::cout << "Unable to connect to database" << std::endl;
         } else {
@@ -162,7 +162,7 @@ int Database::update_participant(nlohmann::json json) {
     std::string club = json["club"];
 
     try {
-        pqxx::connection C("dbname=races user=claus hostaddr=127.0.0.1 port=5432");
+        pqxx::connection C(connectionString);
         if (!C.is_open()) {
             std::cout << "Unable to connect to database" << std::endl;
         } else {
@@ -195,7 +195,7 @@ int Database::delete_participant(nlohmann::json json) {
     std::string club = json["club"];
 
     try {
-        pqxx::connection C("dbname=races user=claus hostaddr=127.0.0.1 port=5432");
+        pqxx::connection C(connectionString);
         if (!C.is_open()) {
             std::cout << "Unable to connect to database" << std::endl;
         } else {
