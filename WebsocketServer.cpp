@@ -49,7 +49,9 @@ void WebsocketServer::on_message(connection_hdl hdl, server::message_ptr msg) {
             message.clear();
             message = database.get_races();
             msg->set_payload(message.dump());
-            m_server.send(hdl, msg);
+            for (auto it : m_connections) {
+                m_server.send(it, msg);
+            }
         }
 
         // Select race with radio button and get participants.
@@ -57,7 +59,9 @@ void WebsocketServer::on_message(connection_hdl hdl, server::message_ptr msg) {
             message.clear();
             message = database.get_participants(jdata);
             msg->set_payload(message.dump());
-            m_server.send(hdl, msg);
+            for (auto it : m_connections) {
+                m_server.send(it, msg);
+            }
         }
 
         if (jdata["type"] == "add participant") {
@@ -65,7 +69,9 @@ void WebsocketServer::on_message(connection_hdl hdl, server::message_ptr msg) {
             message.clear();
             message = database.get_participants(jdata);
             msg->set_payload(message.dump());
-            m_server.send(hdl, msg);
+            for (auto it : m_connections) {
+                m_server.send(it, msg);
+            }
         }
 
         if (jdata["type"] == "update participant") {
@@ -73,7 +79,9 @@ void WebsocketServer::on_message(connection_hdl hdl, server::message_ptr msg) {
             message.clear();
             message = database.get_participants(jdata);
             msg->set_payload(message.dump());
-            m_server.send(hdl, msg);
+            for (auto it : m_connections) {
+                m_server.send(it, msg);
+            }
         }
 
         if (jdata["type"] == "delete participant") {
@@ -81,7 +89,9 @@ void WebsocketServer::on_message(connection_hdl hdl, server::message_ptr msg) {
             message.clear();
             message = database.get_participants(jdata);
             msg->set_payload(message.dump());
-            m_server.send(hdl, msg);
+            for (auto it : m_connections) {
+                m_server.send(it, msg);
+            }
         }
 
     } catch (const std::exception& e) {
