@@ -44,7 +44,7 @@ nlohmann::json Database::get_races() {
     return races;
 }
 
-int Database::add_race(nlohmann::json json) {
+int Database::add_race(const nlohmann::json json) {
     int status = EXIT_FAILURE;
     std::string location = json["location"];
     std::string racename = json["racename"];
@@ -72,7 +72,7 @@ int Database::add_race(nlohmann::json json) {
     return status;
 }
 
-nlohmann::json Database::get_participants(nlohmann::json json) {
+nlohmann::json Database::get_participants(const nlohmann::json json) {
     int status = EXIT_FAILURE;
     participants["type"] = "participants";
     participants["participants"] = { };
@@ -120,7 +120,7 @@ nlohmann::json Database::get_participants(nlohmann::json json) {
     return participants;
 }
 
-int Database::add_participant(nlohmann::json json) {
+int Database::add_participant(const nlohmann::json json) {
     int status = EXIT_FAILURE;
     std::string location = json["location"];
     std::string racename = json["racename"];
@@ -153,7 +153,7 @@ int Database::add_participant(nlohmann::json json) {
     return status;
 }
 
-int Database::update_participant(nlohmann::json json) {
+int Database::update_participant(const nlohmann::json json) {
     int status = EXIT_FAILURE;
     std::string id = json["id"];
     std::string name = json["name"];
@@ -184,7 +184,7 @@ int Database::update_participant(nlohmann::json json) {
     return status;
 }
 
-int Database::delete_participant(nlohmann::json json) {
+int Database::delete_participant(const nlohmann::json json) {
     int status = EXIT_FAILURE;
     std::string location = json["location"];
     std::string racename = json["racename"];

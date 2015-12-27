@@ -17,11 +17,11 @@ private:
 public:
     Database();
     nlohmann::json get_races();
-    int add_race(nlohmann::json);
-    nlohmann::json get_participants(nlohmann::json);
-    int add_participant(nlohmann::json);
-    int update_participant(nlohmann::json);
-    int delete_participant(nlohmann::json);
+    int add_race(const nlohmann::json);
+    nlohmann::json get_participants(const nlohmann::json);
+    int add_participant(const nlohmann::json);
+    int update_participant(const nlohmann::json);
+    int delete_participant(const nlohmann::json);
 };
 
 
