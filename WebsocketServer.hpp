@@ -12,7 +12,7 @@
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
 
-#include "Database.h"
+#include "Database.hpp"
 
 struct connection_data {
     unsigned int session_id;

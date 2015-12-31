@@ -16,5 +16,5 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
     link_libraries(/usr/local/lib/libboost_system.so)
 endif()
 
-set(SOURCE_FILES main.cpp test.cpp WebsocketServer.cpp WebsocketServer.h Database.cpp Database.h)
+set(SOURCE_FILES main.cpp test.cpp WebsocketServer.cpp WebsocketServer.hpp Database.cpp Database.hpp)
 add_executable(cppkarusellrenn ${SOURCE_FILES})

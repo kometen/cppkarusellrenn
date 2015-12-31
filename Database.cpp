@@ -2,7 +2,7 @@
 // Created by Claus Guttesen on 22/12/2015.
 //
 
-#include "Database.h"
+#include "Database.hpp"
 
 // pqxx::result::field
 std::string column_content(pqxx::result::field a) {

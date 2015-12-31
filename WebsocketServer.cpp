@@ -2,7 +2,7 @@
 // Created by Claus Guttesen on 20/12/2015.
 //
 
-#include "WebsocketServer.h"
+#include "WebsocketServer.hpp"
 
 void WebsocketServer::on_open(connection_hdl hdl) {
     connection_ptr con = m_server.get_con_from_hdl(hdl);

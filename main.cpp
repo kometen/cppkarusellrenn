@@ -1,7 +1,7 @@
 #include <iostream>
 #include <bandit/bandit.h>
 
-#include "WebsocketServer.h"
+#include "WebsocketServer.hpp"
 
 using namespace std;
 
