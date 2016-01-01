@@ -19,8 +19,7 @@ void WebsocketServer::on_close(connection_hdl hdl) {
     m_connections.erase(hdl);
 }
 
-void WebsocketServer::on_message(connection_hdl hdl, server::message_ptr msg) {
-    Database database {};
+void WebsocketServer::on_message(connection_hdl hdl, server::message_ptr msg, Database database) {
     connection_ptr con = m_server.get_con_from_hdl(hdl);
 
     payload = msg->get_payload ();

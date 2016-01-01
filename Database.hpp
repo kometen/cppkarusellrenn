@@ -5,6 +5,7 @@
 #ifndef CPPKARUSELLRENN_DATABASE_H
 #define CPPKARUSELLRENN_DATABASE_H
 
+#include <stack>
 #include <json.hpp>
 #include <pqxx/pqxx>
 
@@ -13,9 +14,10 @@ private:
     nlohmann::json races;
     nlohmann::json participants;
     std::string connectionString = "dbname=races user=claus hostaddr=127.0.0.1 port=5432";
+    std::stack<pqxx::connection*> dbpool;
 
 public:
-    Database();
+    Database(const unsigned int);
     nlohmann::json get_races();
     int add_race(const nlohmann::json);
     nlohmann::json get_participants(const nlohmann::json);
