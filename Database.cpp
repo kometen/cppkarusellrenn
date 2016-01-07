@@ -16,8 +16,8 @@ std::string column_content(pqxx::result::field a) {
 Database::Database(const unsigned int connections) {
     for (int i = 0; i < connections; ++i) {
         try {
-            pqxx::connection* dbconn = new pqxx::connection(connectionString);
-            dbpool.emplace(dbconn);
+            auto* dbconn = new pqxx::connection(connectionString);
+            dbpool.push(dbconn);
         } catch (const std::exception& e) {
             std::cerr << e.what() << std::endl;
         }

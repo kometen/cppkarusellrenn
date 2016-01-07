@@ -13,7 +13,7 @@ class Database {
 private:
     nlohmann::json races;
     nlohmann::json participants;
-    std::string connectionString = "dbname=races user=claus hostaddr=127.0.0.1 port=5432";
+    const std::string connectionString = "dbname=races user=claus hostaddr=127.0.0.1 port=5432";
     std::stack<pqxx::connection*> dbpool;
 
 public:
