@@ -16,8 +16,8 @@ std::string column_content(pqxx::result::field a) {
 Database::Database(const unsigned int connections) {
     for (int i = 0; i < connections; ++i) {
         try {
-            auto* dbconn = new pqxx::connection(connectionString);
-            dbpool.push(dbconn);
+            auto dbconn = std::make_shared<pqxx::connection>(connectionString);
+            dbpool.emplace(dbconn);
         } catch (const std::exception& e) {
             std::cerr << e.what() << std::endl;
         }
@@ -30,7 +30,7 @@ nlohmann::json Database::get_races() {
     races.clear();
     races["type"] = "races";
 
-    auto *D = dbpool.top();
+    auto D = dbpool.top();
     dbpool.pop();
 
     std::string query = "select * from races order by racestart_at desc";
@@ -59,7 +59,7 @@ int Database::add_race(const nlohmann::json json) {
     std::string racestart_at = json["racestart_at"];
     std::string interval = json["interval"];
 
-    auto *D = dbpool.top();
+    auto D = dbpool.top();
     dbpool.pop();
 
     pqxx::work W(*D);
@@ -90,7 +90,7 @@ nlohmann::json Database::get_participants(const nlohmann::json json) {
     query += " and racestart_at = '" + racestart_at + "'";
     query += " order by born, gender";
 
-    auto *D = dbpool.top();
+    auto D = dbpool.top();
     pqxx::nontransaction N(*D);
     pqxx::result R(N.exec(query));
 
@@ -127,7 +127,7 @@ int Database::add_participant(const nlohmann::json json) {
     std::string born = json["born"];
     std::string club = json["club"];
 
-    auto *D = dbpool.top();
+    auto D = dbpool.top();
     dbpool.pop();
     pqxx::work W(*D);
 
@@ -152,7 +152,7 @@ int Database::update_participant(const nlohmann::json json) {
     std::string born = json["born"];
     std::string club = json["club"];
 
-    auto *D = dbpool.top();
+    auto D = dbpool.top();
     dbpool.pop();
     pqxx::work W(*D);
 
@@ -179,7 +179,7 @@ int Database::delete_participant(const nlohmann::json json) {
     std::string born = json["born"];
     std::string club = json["club"];
 
-    auto *D = dbpool.top();
+    auto D = dbpool.top();
     dbpool.pop();
     pqxx::work W(*D);
 

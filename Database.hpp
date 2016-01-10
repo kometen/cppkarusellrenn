@@ -14,7 +14,8 @@ private:
     nlohmann::json races;
     nlohmann::json participants;
     const std::string connectionString = "dbname=races user=claus hostaddr=127.0.0.1 port=5432";
-    std::stack<pqxx::connection*> dbpool;
+//    std::stack<pqxx::connection*> dbpool;
+    std::stack<std::shared_ptr<pqxx::connection>> dbpool;
 
 public:
     Database(const unsigned int);
